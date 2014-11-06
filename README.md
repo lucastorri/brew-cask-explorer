@@ -12,6 +12,11 @@ It's buggy… very, very buggy :)
 ## Running
 
 ```
+$path_to/node-webkit $project_dir
+```
+or 
+
+```
 cd $project_dir
 zip -r app.nw * && $path_to/node-webkit app.nw
 ```
