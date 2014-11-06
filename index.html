@@ -1,0 +1,39 @@
+<html ng-app="app">
+  <head>
+    <title>brew-cask-explorer</title>
+  </head>
+  <body ng-controller="Ctrl">
+    <select id="items" ng-model="selected" ng-options="m for m in modules" ng-change="update()"></select>
+    <input type="url" ng-model="url">
+    <iframe  ng-src="{{trustedUrl}}" width="800" height="550">
+    </iframe>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
+
+    <script>
+        console.log('start');
+
+        var api = require('./js/api.js');
+        var app = angular.module('app', []);
+
+        app.controller('Ctrl', function($scope, $sce) {
+
+            console.log('loading ctrl');
+
+            $scope.modules = [];
+
+            $scope.update = function() {
+                api.url($scope.selected, function(url) {
+                    $scope.url = url;
+                    $scope.trustedUrl = $sce.trustAsResourceUrl(url);
+                });
+            };
+
+            api.modules(function(modules) {
+                $scope.modules = modules;
+            });
+
+        });
+
+    </script>
+  </body>
+</html>
